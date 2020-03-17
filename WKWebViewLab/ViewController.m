@@ -29,11 +29,12 @@ const CGFloat kHeaderHeight = 200.0;
     return _webView;
 }
 
-- (UIView *)messageHeaderView
+- (UIView *)headerView
 {
     if (!_headerView)
     {
         _headerView = [[UIView alloc] initWithFrame:CGRectZero];
+        _headerView.backgroundColor = [UIColor grayColor];
         _headerView.translatesAutoresizingMaskIntoConstraints = NO;
     }
     return _headerView;
@@ -41,8 +42,8 @@ const CGFloat kHeaderHeight = 200.0;
 
 - (void)addMessageHeaderView
 {
-    [self.headerView removeConstraints:self.messageHeaderView.constraints];
-    [self.webView.scrollView addSubview:self.messageHeaderView];
+    [self.headerView removeConstraints:self.headerView.constraints];
+    [self.webView.scrollView addSubview:self.headerView];
     [self.headerView.leadingAnchor constraintEqualToAnchor:self.webView.scrollView.leadingAnchor].active = YES;
     [self.headerView.widthAnchor constraintEqualToConstant:CGRectGetWidth(self.view.bounds)].active = YES;
     [self.headerView.topAnchor constraintEqualToAnchor:self.webView.scrollView.topAnchor constant:-kHeaderHeight].active = YES;
@@ -56,6 +57,7 @@ const CGFloat kHeaderHeight = 200.0;
     self.webView.scrollView.contentInset = UIEdgeInsetsMake(200, 0, 0, 0);
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"https://edit-page-static-site.herokuapp.com/index.html"]];
     [self.webView loadRequest:request];
+    [self addMessageHeaderView];
 }
 
 @end
